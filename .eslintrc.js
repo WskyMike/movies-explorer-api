@@ -12,10 +12,8 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
   },
-  plugins: [
-    'vue',
-  ],
   rules: {
     'no-underscore-dangle': ['error', { allow: ['_id'] }],
+    'max-classes-per-file': false,
   },
 };

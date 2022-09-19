@@ -1,7 +1,16 @@
 const { celebrate, Joi } = require('celebrate');
+const validator = require('validator');
 
-// eslint-disable-next-line no-useless-escape
-const linkRegExp = /(http:\/\/|https:\/\/)(www)*[a-z0-9\-\.\_\~\:\/\?\#\[\]\@\!\$\&\'\(\)\*\+\,\;\=]+#*/;
+const urlRequired = Joi.string().required().custom((value, helpers) => {
+  if (validator.isURL(value)) {
+    return value
+  }
+  return helpers.message('Здесь должна быть ссылка');
+})
+.messages({
+  'string.empty': 'Поле обязательно для заполнения',
+  'any.required': 'В запросе отсутствует требуемое поле',
+});
 
 const idValidation = celebrate({
   params: Joi.object().keys({
@@ -67,10 +76,10 @@ const movieValidation = celebrate({
         'string.max': 'Ограничение поля: максимум 30 символов',
         'any.required': 'В запросе отсутствует требуемое поле',
       }),
-    duration: Joi.string().required().max(6)
+    duration: Joi.number().required()
       .messages({
-        'string.empty': 'Поле обязательно для заполнения',
-        'string.max': 'Ограничение поля: максимум 6 символов',
+        'number.empty': 'Поле обязательно для заполнения',
+        'number.max': 'Ограничение поля: максимум 6 символов',
         'any.required': 'В запросе отсутствует требуемое поле',
       }),
     year: Joi.string().required()
@@ -83,27 +92,12 @@ const movieValidation = celebrate({
         'string.empty': 'Поле обязательно для заполнения',
         'any.required': 'В запросе отсутствует требуемое поле',
       }),
-    image: Joi.string().required().pattern(linkRegExp)
+    image: urlRequired,
+    trailerLink: urlRequired,
+    thumbnail: urlRequired,
+    movieId: Joi.number().required()
       .messages({
-        'string.empty': 'Поле обязательно для заполнения',
-        'string.pattern': 'Здесь должна быть ссылка',
-        'any.required': 'В запросе отсутствует требуемое поле',
-      }),
-    trailer: Joi.string().required().pattern(linkRegExp)
-      .messages({
-        'string.empty': 'Поле обязательно для заполнения',
-        'string.pattern': 'Здесь должна быть ссылка',
-        'any.required': 'В запросе отсутствует требуемое поле',
-      }),
-    thumbnail: Joi.string().required().pattern(linkRegExp)
-      .messages({
-        'string.empty': 'Поле обязательно для заполнения',
-        'string.pattern': 'Здесь должна быть ссылка',
-        'any.required': 'В запросе отсутствует требуемое поле',
-      }),
-    movieId: Joi.string().required()
-      .messages({
-        'string.empty': 'Поле обязательно для заполнения',
+        'number.empty': 'Поле обязательно для заполнения',
         'any.required': 'В запросе отсутствует требуемое поле',
       }),
     nameRU: Joi.string().required()
@@ -138,7 +132,6 @@ const userValidation = celebrate({
 });
 
 module.exports = {
-  linkRegExp,
   userValidation,
   signupValidation,
   signinValidation,

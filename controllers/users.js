@@ -59,15 +59,14 @@ function createUser(req, res, next) {
       });
     })
     .catch((err) => {
-      if (err.name === 'MongoError' && err.code === 11000) {
-        next(new ConflictError());
-      } else if (err.name === 'ValidationError') {
+      if (err.code === 11000) {
+        next(new ConflictError('Пользователь с таким email уже существует'));
+      } else if (err.name === 'ValidationError'|| err.name === 'CastError') {
         next(new BadRequestError());
       } else {
         next(err);
       }
     })
-    .catch(next);
 }
 
 // Залогиниться

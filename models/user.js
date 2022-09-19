@@ -3,6 +3,12 @@ const { Schema, model } = require('mongoose');
 const { isEmail } = require('validator');
 const bcrypt = require('bcrypt');
 
+const { ...errors } = require('../errors/CustClasses');
+
+const {
+  UnauthorizedError,
+} = errors;
+
 const requiredString = {
   type: String,
   required: true,
@@ -36,13 +42,13 @@ userSchema.statics.findUserByCredentials = function (email, password) {
   return this.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
-        throw new Error('Неправильные почта или пароль 1');
+        throw new UnauthorizedError('Неправильные почта или пароль 1');
       }
 
       return bcrypt.compare(password, user.password)
         .then((matched) => {
           if (!matched) {
-            throw new Error('Неправильные почта или пароль 2');
+            throw new UnauthorizedError('Неправильные почта или пароль 2');
           }
 
           return user;

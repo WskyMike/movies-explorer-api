@@ -1,17 +1,23 @@
 const { Schema, model } = require('mongoose');
-const { linkRegExp } = require('../middlewares/validate');
+const validator = require('validator');
 
 const requiredString = {
   type: String,
   required: true,
 };
 
+const requiredNumber = {
+  type: Number,
+  required: true,
+};
+
 const requiredURL = {
   ...requiredString,
   validate: {
-    validator(link) {
-      return linkRegExp.test(link);
+    validator: (link) => {
+      return validator.isURL(link)
     },
+    message: 'Здесь должна быть ссылка',
   },
 };
 
@@ -23,7 +29,7 @@ const movieSchema = new Schema({
     ...requiredString,
   },
   duration: {
-    ...requiredString,
+    ...requiredNumber,
   },
   year: {
     ...requiredString,
@@ -34,7 +40,7 @@ const movieSchema = new Schema({
   image: {
     ...requiredURL,
   },
-  trailer: {
+  trailerLink: {
     ...requiredURL,
   },
   thumbnail: {
@@ -46,7 +52,7 @@ const movieSchema = new Schema({
     required: true,
   },
   movieId: {
-    ...requiredString,
+    ...requiredNumber,
   },
   nameRU: {
     ...requiredString,
@@ -54,10 +60,6 @@ const movieSchema = new Schema({
   nameEN: {
     ...requiredString,
   },
-  // createdAt: {
-  //   type: Date,
-  //   default: Date.now,
-  // },
 }, {
   versionKey: false, // убрать версию из схемы
 });

@@ -22,6 +22,8 @@ app.use(cors());
 
 app.use(helmet());
 
+app.use(limiter);
+
 app.use(requestLogger); // Запросы
 
 // Краш-тест сервера
@@ -38,8 +40,6 @@ app.use(errorLogger); // Ошибки
 app.use(errors()); // JOI
 
 app.use(errorHandler);
-
-app.use(limiter);
 
 // Подключение //
 async function connection() {
