@@ -11,7 +11,7 @@ const {
 
 //  Получить все фильмы
 function getMovies(req, res, next) {
-  Movie.find({})
+  Movie.find({ owner: req.user._id })
     .then((cards) => res.send(cards))
     .catch(next);
 }
