@@ -62,18 +62,14 @@ const signinValidation = celebrate({
 
 const movieValidation = celebrate({
   body: Joi.object().keys({
-    country: Joi.string().required().min(2).max(55)
+    country: Joi.string().required()
       .messages({
         'string.empty': 'Поле обязательно для заполнения',
-        'string.min': 'Ограничение поля: минимум 2 символа',
-        'string.max': 'Ограничение поля: максимум 55 символов',
         'any.required': 'В запросе отсутствует требуемое поле',
       }),
-    director: Joi.string().required().min(2).max(30)
+    director: Joi.string().required()
       .messages({
         'string.empty': 'Поле обязательно для заполнения',
-        'string.min': 'Ограничение поля: минимум 2 символа',
-        'string.max': 'Ограничение поля: максимум 30 символов',
         'any.required': 'В запросе отсутствует требуемое поле',
       }),
     duration: Joi.number().required()
