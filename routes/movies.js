@@ -6,7 +6,7 @@ const {
 } = require('../controllers/movies');
 const { movieValidation, idValidation } = require('../middlewares/validate');
 
-moviesRouter.get('/', getMovies); // возвращает все сохранённые текущим  пользователем фильмы
+moviesRouter.get('/me', getMovies); // возвращает все сохранённые текущим пользователем фильмы
 moviesRouter.post('/', movieValidation, createMovie); // создаёт фильм с переданными в теле полями
 moviesRouter.delete('/:_id', idValidation, deleteMovie); // удаляет сохранённый фильм по id
 
