@@ -33,8 +33,8 @@
 3. `npm run dev` — запускает сервер с hot-reload
 
 ### 🔗 Ссылки:
-* Front: https://diploma.front.nomorepartiesxyz.ru
-* Back: https://diploma.back.nomorepartiesxyz.ru
+* Front: https://moviesexplorer.webtm.ru
+* Back: https://api.moviesexplorer.webtm.ru
 * Макет: https://disk.yandex.ru/d/414dzR10sgu6hw
 
 ### Эндпоинты
@@ -53,9 +53,6 @@
 * `/models` — модели схем пользователя и фильма
 * `/routes` — роуты
 * `/utils` — папка с константами и конфигурацией
-
-### Адрес сервера:
-`https://diploma.back.nomorepartiesxyz.ru` `51.250.87.66`
 
 
 
